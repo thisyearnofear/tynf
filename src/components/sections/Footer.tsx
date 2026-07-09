@@ -20,7 +20,7 @@ export default function Footer() {
             GH
           </a>
         </div>
-        built in public — no fear, no finish line
+        built in public — no fear, no time like the present
         <br />
         © {new Date().getFullYear()} thisyearnofear
       </Reveal>

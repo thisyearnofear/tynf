@@ -21,7 +21,8 @@ export default function Vision() {
   return (
     <section id="vision" className="section about vision">
       <Reveal as="p" className="about__big" variant="fade">
-        We build worlds that <em>move</em>. Here&apos;s where this is going.
+        The agentic era arrived, and the excuses that kept people{" "}
+        <em>waiting</em> went with it.
       </Reveal>
 
       <div className="vision__grid">
@@ -34,8 +35,8 @@ export default function Vision() {
       </div>
 
       <Reveal as="p" className="vision__close" variant="fade">
-        No fear. No finish line. Just the work — built in public, positioned for
-        what comes next.
+        No fear. No finish line. No time like the present — just the work,
+        built in public.
       </Reveal>
     </section>
   );

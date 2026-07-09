@@ -88,7 +88,7 @@ export default function Hero() {
       </div>
 
       <p className="hero__eyebrow" data-fade>
-        studio of immersive web — est. this year
+        an agentic-era studio — est. this year
       </p>
       <h1 className="hero__title">
         <span className="line-mask">
@@ -102,8 +102,8 @@ export default function Hero() {
       </h1>
       <div className="hero__meta">
         <p className="hero__lead" data-fade>
-          A portfolio of over-the-top, scroll-driven experiences. We build
-          worlds that move — rendered in real time, felt in the body.
+          The agentic era closed the gap between an idea and a working thing.
+          No time like the present, no permission required — just build.
         </p>
         <div className="hero__scroll" data-fade>
           scroll <span>↓</span>
