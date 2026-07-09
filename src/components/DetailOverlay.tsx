@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/lib/useIsomorphicLayoutEffect";
 import { useSmoothScroll } from "@/components/SmoothScrollProvider";
@@ -143,6 +144,15 @@ export default function DetailOverlay({
 
       <div className="detail-overlay__scroll" ref={scrollRef}>
         <header className="detail__hero">
+          <div className="detail__hero-image" data-fade>
+            <Image
+              src={`/projects/hero/${project.id}.jpg`}
+              alt=""
+              fill
+              sizes="(max-width: 760px) 100vw, 1200px"
+              priority
+            />
+          </div>
           <p className="detail__eyebrow" data-fade>
             {project.year} · {project.role}
             {project.status === "fork" ? " · fork" : ""}

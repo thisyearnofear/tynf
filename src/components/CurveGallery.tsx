@@ -47,30 +47,67 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
   return lines;
 }
 
-function makeLabelTexture(title: string, tagline: string, accent: string) {
+function drawCard(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  title: string,
+  tagline: string,
+  accent: string,
+  image: HTMLImageElement | null
+) {
+  ctx.clearRect(0, 0, width, height);
+
+  if (image) {
+    const scale = Math.max(width / image.width, height / image.height);
+    const w = image.width * scale;
+    const h = image.height * scale;
+    ctx.drawImage(image, (width - w) / 2, (height - h) / 2, w, h);
+  } else {
+    ctx.fillStyle = "#0f0f12";
+    ctx.fillRect(0, 0, width, height);
+  }
+
+  const scrim = ctx.createLinearGradient(0, height * 0.32, 0, height);
+  scrim.addColorStop(0, "rgba(8, 8, 10, 0)");
+  scrim.addColorStop(1, "rgba(8, 8, 10, 0.92)");
+  ctx.fillStyle = scrim;
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
+
+  ctx.font = "700 92px Georgia, serif";
+  ctx.fillStyle = "#f4f1ea";
+  ctx.fillText(title, width / 2, height * 0.8);
+
+  ctx.font = "italic 400 30px Georgia, serif";
+  ctx.fillStyle = accent;
+  const lines = wrapText(ctx, tagline, width * 0.74).slice(0, 2);
+  const lineHeight = 40;
+  lines.forEach((line, i) => {
+    ctx.fillText(line, width / 2, height * 0.8 + 44 + i * lineHeight);
+  });
+}
+
+function makeLabelTexture(id: string, title: string, tagline: string, accent: string) {
   const c = document.createElement("canvas");
   c.width = 1024;
   c.height = 640;
   const ctx = c.getContext("2d")!;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
 
-  ctx.font = "700 112px Georgia, serif";
-  ctx.fillStyle = accent;
-  ctx.fillText(title, c.width / 2, c.height * 0.4);
-
-  ctx.font = "italic 400 34px Georgia, serif";
-  ctx.fillStyle = "rgba(244, 241, 234, 0.85)";
-  const lines = wrapText(ctx, tagline, c.width * 0.7).slice(0, 2);
-  const lineHeight = 44;
-  const startY = c.height * 0.4 + 96;
-  lines.forEach((line, i) => {
-    ctx.fillText(line, c.width / 2, startY + i * lineHeight);
-  });
-
+  drawCard(ctx, c.width, c.height, title, tagline, accent, null);
   const tex = new THREE.CanvasTexture(c);
   tex.anisotropy = 4;
   tex.needsUpdate = true;
+
+  const img = new Image();
+  img.onload = () => {
+    drawCard(ctx, c.width, c.height, title, tagline, accent, img);
+    tex.needsUpdate = true;
+  };
+  img.src = `/projects/hero/${id}.jpg`;
+
   return tex;
 }
 
@@ -152,7 +189,7 @@ export default function CurveGallery({
       mesh.position.copy(pos);
 
       const labelMat = new THREE.MeshBasicMaterial({
-        map: makeLabelTexture(p.title, p.tagline, p.accent),
+        map: makeLabelTexture(p.id, p.title, p.tagline, p.accent),
         transparent: true,
         depthWrite: false,
       });

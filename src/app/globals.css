@@ -843,6 +843,18 @@ html.lenis body {
 .detail__hero {
   margin-bottom: clamp(3rem, 9vw, 7rem);
 }
+.detail__hero-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  border: 1px solid var(--line);
+}
+.detail__hero-image img {
+  object-fit: cover;
+}
 .detail__eyebrow {
   font-family: var(--mono);
   font-size: 0.75rem;
