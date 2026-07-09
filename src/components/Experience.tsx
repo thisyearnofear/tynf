@@ -13,7 +13,7 @@ import Hero from "./sections/Hero";
 import Marquee from "./sections/Marquee";
 import Manifesto from "./sections/Manifesto";
 import Projects from "./sections/Projects";
-import About from "./sections/About";
+import Vision from "./sections/About";
 import Footer from "./sections/Footer";
 
 export default function Experience() {
@@ -47,7 +47,7 @@ export default function Experience() {
         <Marquee />
         <Manifesto />
         <Projects />
-        <About />
+        <Vision />
         <Footer />
       </main>
     </SmoothScrollProvider>

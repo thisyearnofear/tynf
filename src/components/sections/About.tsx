@@ -2,21 +2,40 @@
 
 import { Reveal } from "@/components/useScrollReveal";
 
-export default function About() {
+const beams = [
+  {
+    k: "Living toys",
+    t: "Narrative objects that remember you — and argue back from the future.",
+  },
+  {
+    k: "Onchain culture",
+    t: "Turning play, memes and effort into infrastructure anyone can stand on.",
+  },
+  {
+    k: "Interfaces that compose themselves",
+    t: "Describe a world; watch the controls assemble in real time.",
+  },
+];
+
+export default function Vision() {
   return (
-    <section id="contact" className="section about">
+    <section id="vision" className="section about vision">
       <Reveal as="p" className="about__big" variant="fade">
-        Got a world that needs <em>building</em>? Let&apos;s make something
-        that refuses to be ignored.
+        We build worlds that <em>move</em>. Here&apos;s where this is going.
       </Reveal>
-      <Reveal variant="fade">
-        <a
-          className="about__cta"
-          href="mailto:hello@thisyearnofear.dev"
-          data-hover
-        >
-          start a project <span>→</span>
-        </a>
+
+      <div className="vision__grid">
+        {beams.map((b) => (
+          <Reveal as="div" className="vision__beam" key={b.k} variant="fade">
+            <span className="vision__k">{b.k}</span>
+            <p className="vision__t">{b.t}</p>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal as="p" className="vision__close" variant="fade">
+        No fear. No finish line. Just the work — built in public, positioned for
+        what comes next.
       </Reveal>
     </section>
   );

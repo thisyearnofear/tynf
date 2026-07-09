@@ -16,11 +16,13 @@ export default function Footer() {
           <a href="#" data-hover>
             X
           </a>
-          <a href="#" data-hover>
+          <a href="https://github.com/thisyearnofear" data-hover>
             GH
           </a>
         </div>
-        © {new Date().getFullYear()} — no fear, no finish line
+        built in public — no fear, no finish line
+        <br />
+        © {new Date().getFullYear()} thisyearnofear
       </Reveal>
     </footer>
   );
