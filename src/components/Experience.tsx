@@ -8,6 +8,8 @@ import { projects } from "@/data/projects";
 
 import Preloader from "./Preloader";
 import Cursor from "./Cursor";
+import CursorSparks from "./CursorSparks";
+import SoundToggle from "./SoundToggle";
 import ScrollProgress from "./ScrollProgress";
 import WebGLBackground from "./WebGLBackground";
 import Nav from "./sections/Nav";
@@ -42,6 +44,8 @@ export default function Experience() {
     <SmoothScrollProvider>
       <WebGLBackground />
       <Cursor />
+      <CursorSparks />
+      <SoundToggle />
       <ScrollProgress />
       {!ready && <Preloader onComplete={handleLoaded} />}
 
