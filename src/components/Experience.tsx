@@ -24,7 +24,13 @@ import Footer from "./sections/Footer";
 export default function Experience() {
   const [ready, setReady] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [origin, setOrigin] = useState<{ x: number; y: number } | null>(null);
   const { setAccent } = useSmoothScroll();
+
+  const handleSelect = (id: string, o?: { x: number; y: number }) => {
+    setSelectedId(id);
+    setOrigin(o ?? null);
+  };
 
   // home page uses the brand accent
   useEffect(() => {
@@ -55,7 +61,7 @@ export default function Experience() {
         <Hero />
         <Marquee />
         <Manifesto />
-        <CurveGallery onSelect={setSelectedId} />
+        <CurveGallery onSelect={handleSelect} />
         <Vision />
         <Footer />
       </main>
@@ -63,8 +69,9 @@ export default function Experience() {
       {selectedId && (
         <DetailOverlay
           project={projects.find((p) => p.id === selectedId)!}
+          origin={origin}
           onClose={() => setSelectedId(null)}
-          onSelect={setSelectedId}
+          onSelect={handleSelect}
         />
       )}
     </SmoothScrollProvider>

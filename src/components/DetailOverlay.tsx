@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/lib/useIsomorphicLayoutEffect";
 import { useSmoothScroll } from "@/components/SmoothScrollProvider";
@@ -10,16 +10,20 @@ import type { Project } from "@/data/projects";
 
 export default function DetailOverlay({
   project,
+  origin,
   onClose,
   onSelect,
 }: {
   project: Project;
+  origin?: { x: number; y: number } | null;
   onClose: () => void;
-  onSelect: (id: string) => void;
+  onSelect: (id: string, origin?: { x: number; y: number }) => void;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const { setAccent } = useSmoothScroll();
+  const [closing, setClosing] = useState(false);
 
   const index = projects.findIndex((p) => p.id === project.id);
   const next = projects[(index + 1) % projects.length];
@@ -29,9 +33,11 @@ export default function DetailOverlay({
     setAccent(project.accent);
   }, [project.accent, setAccent]);
 
+  const requestClose = () => setClosing(true);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") requestClose();
     };
     window.addEventListener("keydown", onKey);
     const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } })
@@ -43,32 +49,80 @@ export default function DetailOverlay({
       lenis?.start();
       document.body.style.overflow = "";
     };
-  }, [onClose]);
+  }, []);
+
+  // one-shot reveal: the overlay zooms in from wherever the user clicked,
+  // mirroring the card it grew out of. Runs once on mount only — switching
+  // between projects while already open uses the lighter content transition below.
+  useIsomorphicLayoutEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reduce) {
+      gsap.set(el, { autoAlpha: 1, clipPath: "none" });
+      return;
+    }
+
+    const ox = origin?.x ?? window.innerWidth / 2;
+    const oy = origin?.y ?? window.innerHeight / 2;
+
+    gsap.set(el, { autoAlpha: 1, clipPath: `circle(1% at ${ox}px ${oy}px)` });
+    gsap.set(scrollRef.current, { filter: "blur(6px)", opacity: 0.6 });
+    gsap.to(el, {
+      clipPath: `circle(150% at ${ox}px ${oy}px)`,
+      duration: 0.6,
+      ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+    });
+    gsap.to(scrollRef.current, {
+      filter: "blur(0px)",
+      opacity: 1,
+      duration: 0.5,
+      delay: 0.1,
+      ease: "power2.out",
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!closing) return;
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const tl = gsap.timeline({ onComplete: onClose });
+    tl.to(rootRef.current, {
+      autoAlpha: 0,
+      scale: reduce ? 1 : 0.98,
+      duration: reduce ? 0.12 : 0.25,
+      ease: "power2.out",
+    });
+    return () => {
+      tl.kill();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [closing]);
 
   useIsomorphicLayoutEffect(() => {
     const reduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    scrollRef.current?.scrollTo({ top: 0, behavior: "auto" });
     const tl = gsap.timeline();
-    tl.fromTo(
-      rootRef.current,
-      { autoAlpha: 0 },
-      { autoAlpha: 1, duration: reduce ? 0.15 : 0.5, ease: "power2.out" }
-    );
     const inner = titleRef.current?.firstElementChild as HTMLElement | null;
     if (inner) {
       tl.fromTo(
         inner,
         { yPercent: 120 },
         { yPercent: 0, duration: reduce ? 0.2 : 1.1, ease: "expo.out" },
-        0.05
+        0
       );
     }
     tl.fromTo(
       rootRef.current!.querySelectorAll("[data-fade]"),
       { autoAlpha: 0, y: 30 },
       { autoAlpha: 1, y: 0, duration: reduce ? 0.2 : 0.8, stagger: 0.05 },
-      0.2
+      0.15
     );
     return () => {
       tl.kill();
@@ -83,11 +137,11 @@ export default function DetailOverlay({
       role="dialog"
       aria-modal="true"
     >
-      <button className="detail-overlay__close" onClick={onClose} data-hover>
+      <button className="detail-overlay__close" onClick={requestClose} data-hover>
         close <span>×</span>
       </button>
 
-      <div className="detail-overlay__scroll">
+      <div className="detail-overlay__scroll" ref={scrollRef}>
         <header className="detail__hero">
           <p className="detail__eyebrow" data-fade>
             {project.year} · {project.role}
@@ -163,7 +217,7 @@ export default function DetailOverlay({
 
         <button
           className="detail__next"
-          onClick={() => onSelect(next.id)}
+          onClick={(e) => onSelect(next.id, { x: e.clientX, y: e.clientY })}
           data-hover
         >
           <span className="detail__next-label">next project</span>

@@ -30,16 +30,44 @@ const fragment = /* glsl */ `
   }
 `;
 
-function makeLabelTexture(title: string, accent: string) {
+function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number) {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let line = "";
+  for (const word of words) {
+    const test = line ? `${line} ${word}` : word;
+    if (line && ctx.measureText(test).width > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function makeLabelTexture(title: string, tagline: string, accent: string) {
   const c = document.createElement("canvas");
   c.width = 1024;
   c.height = 640;
   const ctx = c.getContext("2d")!;
-  ctx.font = "700 120px Georgia, serif";
-  ctx.fillStyle = accent;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(title, c.width / 2, c.height / 2);
+
+  ctx.font = "700 112px Georgia, serif";
+  ctx.fillStyle = accent;
+  ctx.fillText(title, c.width / 2, c.height * 0.4);
+
+  ctx.font = "italic 400 34px Georgia, serif";
+  ctx.fillStyle = "rgba(244, 241, 234, 0.85)";
+  const lines = wrapText(ctx, tagline, c.width * 0.7).slice(0, 2);
+  const lineHeight = 44;
+  const startY = c.height * 0.4 + 96;
+  lines.forEach((line, i) => {
+    ctx.fillText(line, c.width / 2, startY + i * lineHeight);
+  });
+
   const tex = new THREE.CanvasTexture(c);
   tex.anisotropy = 4;
   tex.needsUpdate = true;
@@ -49,7 +77,7 @@ function makeLabelTexture(title: string, accent: string) {
 export default function CurveGallery({
   onSelect,
 }: {
-  onSelect: (id: string) => void;
+  onSelect: (id: string, origin?: { x: number; y: number }) => void;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -124,7 +152,7 @@ export default function CurveGallery({
       mesh.position.copy(pos);
 
       const labelMat = new THREE.MeshBasicMaterial({
-        map: makeLabelTexture(p.title, p.accent),
+        map: makeLabelTexture(p.title, p.tagline, p.accent),
         transparent: true,
         depthWrite: false,
       });
@@ -167,8 +195,8 @@ export default function CurveGallery({
         document.body.style.cursor = hit ? "pointer" : "";
       }
     };
-    const onClick = () => {
-      if (hovered) onSelectRef.current(hovered.id);
+    const onClick = (e: PointerEvent) => {
+      if (hovered) onSelectRef.current(hovered.id, { x: e.clientX, y: e.clientY });
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerdown", onClick);

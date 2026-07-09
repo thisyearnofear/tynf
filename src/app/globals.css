@@ -700,6 +700,7 @@ html.lenis body {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   opacity: 0;
+  will-change: clip-path, opacity, transform;
 }
 .detail-overlay__scroll {
   position: absolute;
