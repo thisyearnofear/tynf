@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ScrollTrigger } from "@/lib/gsap";
 import { heroIntro } from "./heroIntro";
 import { SmoothScrollProvider, useSmoothScroll } from "./SmoothScrollProvider";
+import { projects } from "@/data/projects";
 
 import Preloader from "./Preloader";
 import Cursor from "./Cursor";
@@ -12,12 +13,14 @@ import Nav from "./sections/Nav";
 import Hero from "./sections/Hero";
 import Marquee from "./sections/Marquee";
 import Manifesto from "./sections/Manifesto";
-import Projects from "./sections/Projects";
+import CurveGallery from "./CurveGallery";
+import DetailOverlay from "./DetailOverlay";
 import Vision from "./sections/About";
 import Footer from "./sections/Footer";
 
 export default function Experience() {
   const [ready, setReady] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const { setAccent } = useSmoothScroll();
 
   // home page uses the brand accent
@@ -46,10 +49,18 @@ export default function Experience() {
         <Hero />
         <Marquee />
         <Manifesto />
-        <Projects />
+        <CurveGallery onSelect={setSelectedId} />
         <Vision />
         <Footer />
       </main>
+
+      {selectedId && (
+        <DetailOverlay
+          project={projects.find((p) => p.id === selectedId)!}
+          onClose={() => setSelectedId(null)}
+          onSelect={setSelectedId}
+        />
+      )}
     </SmoothScrollProvider>
   );
 }
