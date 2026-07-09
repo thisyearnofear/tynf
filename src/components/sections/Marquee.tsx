@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { useIsomorphicLayoutEffect } from "@/lib/useIsomorphicLayoutEffect";
+import { projects } from "@/data/projects";
 
 export default function Marquee() {
   const ref = useRef<HTMLDivElement>(null);
@@ -13,18 +14,19 @@ export default function Marquee() {
       const track = ref.current!.querySelector<HTMLElement>(".marquee__track");
       if (!track) return;
       const half = track.scrollWidth / 2;
-      gsap.to(track, { x: -half, duration: 22, ease: "none", repeat: -1 });
+      gsap.to(track, { x: -half, duration: 28, ease: "none", repeat: -1 });
     }, ref);
     return () => ctx.revert();
   }, []);
 
+  const items = [...projects, ...projects];
+
   return (
     <section className="marquee" aria-hidden ref={ref}>
       <div className="marquee__track">
-        {Array.from({ length: 2 }).map((_, i) => (
+        {items.map((p, i) => (
           <span className="marquee__item" key={i}>
-            NO FEAR<span className="dot">●</span>NO FINISH LINE
-            <span className="dot">●</span>JUST THE WORK
+            {p.title}
             <span className="dot">●</span>
           </span>
         ))}

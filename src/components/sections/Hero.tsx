@@ -60,6 +60,19 @@ export default function Hero() {
           scrub: true,
         },
       });
+
+      // foreground glyphs drift up and fade as you leave the hero
+      gsap.to(".hero__glyphs", {
+        yPercent: -120,
+        autoAlpha: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
     }, ref);
 
     return () => ctx.revert();
@@ -67,6 +80,13 @@ export default function Hero() {
 
   return (
     <section ref={ref} className="section hero" id="top">
+      <div className="hero__glyphs" aria-hidden>
+        <span className="hero__glyph hero__glyph--1">✦</span>
+        <span className="hero__glyph hero__glyph--2">◍</span>
+        <span className="hero__glyph hero__glyph--3">✺</span>
+        <span className="hero__glyph hero__glyph--4">◇</span>
+      </div>
+
       <p className="hero__eyebrow" data-fade>
         studio of immersive web — est. this year
       </p>

@@ -281,6 +281,66 @@ html.lenis body {
   }
 }
 
+/* ---------- Hero floating glyphs (foreground parallax) ---------- */
+.hero__glyphs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: difference;
+}
+.hero__glyph {
+  position: absolute;
+  font-size: clamp(1.5rem, 4vw, 3.5rem);
+  color: var(--ink);
+  opacity: 0.5;
+  animation: glyph-float 9s var(--ease) infinite;
+}
+.hero__glyph--1 {
+  top: 18%;
+  left: 12%;
+  animation-delay: 0s;
+}
+.hero__glyph--2 {
+  top: 32%;
+  right: 16%;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  animation-delay: 1.4s;
+}
+.hero__glyph--3 {
+  bottom: 26%;
+  left: 22%;
+  animation-delay: 2.8s;
+}
+.hero__glyph--4 {
+  bottom: 18%;
+  right: 24%;
+  animation-delay: 4.1s;
+}
+@keyframes glyph-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-22px) rotate(12deg);
+  }
+}
+
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: var(--accent);
+  z-index: 300;
+  pointer-events: none;
+}
+
 /* ---------- Reveal helpers ---------- */
 .line-mask {
   display: block;
