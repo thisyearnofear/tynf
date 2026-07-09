@@ -785,7 +785,7 @@ html.lenis body {
 /* ---------- Footer ---------- */
 .footer {
   border-top: 1px solid var(--line);
-  padding-block: 3rem 2rem;
+  padding-block: clamp(6rem, 10vw, 9rem) clamp(4rem, 8vw, 6rem);
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;

@@ -13,9 +13,6 @@ export default function Nav() {
         <a href="#manifesto" data-hover>
           ethos
         </a>
-        <a href="#contact" data-hover>
-          contact
-        </a>
       </nav>
     </header>
   );

@@ -186,9 +186,9 @@ export default function WebGLBackground() {
   useEffect(() => {
     const target = new THREE.Color(accent);
     gsap.to(uniformsRef.current.uColorB.value, {
-      r: target.r,
-      g: target.g,
-      b: target.b,
+      x: target.r,
+      y: target.g,
+      z: target.b,
       duration: 0.9,
       ease: "power2.out",
       overwrite: true,
