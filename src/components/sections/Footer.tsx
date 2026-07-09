@@ -1,0 +1,27 @@
+"use client";
+
+import { Reveal } from "@/components/useScrollReveal";
+
+export default function Footer() {
+  return (
+    <footer className="section footer">
+      <Reveal as="div" className="footer__brand" variant="fade">
+        thisyearnofear
+      </Reveal>
+      <Reveal as="div" className="footer__meta" variant="fade">
+        <div className="footer__links">
+          <a href="#" data-hover>
+            IG
+          </a>
+          <a href="#" data-hover>
+            X
+          </a>
+          <a href="#" data-hover>
+            GH
+          </a>
+        </div>
+        © {new Date().getFullYear()} — no fear, no finish line
+      </Reveal>
+    </footer>
+  );
+}

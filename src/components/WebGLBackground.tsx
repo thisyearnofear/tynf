@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 const vertex = /* glsl */ `
   varying vec2 vUv;
@@ -175,7 +174,6 @@ export default function WebGLBackground() {
       mesh.geometry.dispose();
       material.dispose();
       renderer.dispose();
-      ScrollTrigger.refresh();
     };
   }, []);
 

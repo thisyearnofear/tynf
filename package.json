@@ -6,7 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "bash -c 'tsc --noEmit'"
+    ],
+    "*.{json,md,css}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@types/three": "^0.185.1",
@@ -23,6 +34,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "playwright": "^1.61.1",
     "typescript": "^5"
   }
 }

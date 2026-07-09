@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+# 1) Secret scan - blocks the commit if gitleaks finds a leak in staged changes.
+gitleaks protect --redact --staged --no-banner || {
+  cat <<'EOF'
+
+  gitleaks detected a secret in your staged changes.
+  Review the output above, remove (or rotate) the secret, then commit again.
+  If this is a false positive, add a gitleaks:allow comment or a
+  .gitleaksignore entry. You can bypass with: git commit --no-verify
+
+EOF
+  exit 1
+}
+
+# 2) Lint + typecheck staged files via lint-staged.
+npx lint-staged

@@ -1,5 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# gitleaks (vendored baseline + project config are not source)
+.gitleaks.base.toml
+.gitleaks.toml
+.gitleaksignore
+
 # dependencies
 /node_modules
 /.pnp

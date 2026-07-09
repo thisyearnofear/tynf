@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# thisyearnofear
 
-## Getting Started
+An over-the-top, scroll-driven portfolio for the **thisyearnofear** studio — a single immersive page that showcases the projects built under the moniker. Real-time WebGL background, smooth scroll, masked line reveals, and parallax, composed with Next.js 16 (App Router), Three.js, GSAP, and Lenis.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16.2** (App Router, Turbopack) — `src/app`
+- **Three.js** — fixed full-screen shader background (`WebGLBackground`)
+- **GSAP + ScrollTrigger** — intro timeline, scroll reveals, parallax, marquee
+- **Lenis** — smooth scrolling, driven by GSAP's ticker (wired in `Experience`)
+- **TypeScript** throughout
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Other scripts:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build      # production build
+npm run start      # serve the production build
+npm run lint       # eslint
+npm run typecheck  # tsc --noEmit
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+src/
+  app/
+    layout.tsx        # fonts (Space Grotesk / Fraunces / Geist Mono) + metadata
+    page.tsx          # renders <Experience/>
+    globals.css       # design tokens + all component styles
+  components/
+    Experience.tsx    # top-level client orchestrator (preloader gate, composition)
+    Preloader.tsx     # 0→100 counter that wipes into the hero
+    Cursor.tsx        # custom magnetic cursor
+    WebGLBackground.tsx
+    heroIntro.ts      # shared registry so Experience can trigger the hero intro
+    sections/         # page sections, one file each
+      Nav.tsx Hero.tsx Marquee.tsx Manifesto.tsx
+      Projects.tsx About.tsx Footer.tsx
+    useScrollReveal.tsx  # useScrollReveal hook + <Reveal>/<Parallax> helpers
+  data/
+    projects.ts       # ★ the portfolio content — edit this to add/change projects
+  lib/
+    gsap.ts                 # registers ScrollTrigger once
+    useIsomorphicLayoutEffect.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Adding a project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open `src/data/projects.ts` and append an object to the `projects` array:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```ts
+{
+  id: "my-project",
+  title: "MY PROJECT",
+  tagline: "One line that sells it.",
+  description: "A paragraph of context.",
+  year: "2026",
+  role: "Role · Discipline",
+  language: "TypeScript",
+  tags: ["WebGL", "AI"],
+  accent: "#ff4d2e",          // any CSS color; drives the card glow
+  status: "live",             // "live" | "fork" | "archived"
+  href: "https://…",          // live URL (falls back to repo)
+  repo: "https://github.com/thisyearnofear/my-project",
+}
+```
 
-## Deploy on Vercel
+The grid, parallax, reveals, and marquee are all data-driven — no other file needs to change.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Git hooks
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A Husky `pre-commit` runs on every commit:
+
+1. **gitleaks** — scans staged changes for secrets (config: `.gitleaks.toml`, vendored baseline: `.gitleaks.base.toml`). Blocks the commit if a leak is found.
+2. **lint-staged** — runs `eslint --fix` (and `tsc --noEmit`) on staged `*.{ts,tsx,js,jsx}` files.
+
+The secret-scan config files (`.gitleaks.*`) are git-ignored on purpose — they're environment tooling, not source.
+
+## Notes
+
+- Respects `prefers-reduced-motion`: preloader, reveals, parallax, and the WebGL loop all degrade gracefully.
+- The WebGL background pauses when the tab is hidden to save battery.
