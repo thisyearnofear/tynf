@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollTrigger } from "@/lib/gsap";
 import { heroIntro } from "./heroIntro";
+import { SmoothScrollProvider, useSmoothScroll } from "./SmoothScrollProvider";
 
 import Preloader from "./Preloader";
 import Cursor from "./Cursor";
@@ -17,6 +18,12 @@ import Footer from "./sections/Footer";
 
 export default function Experience() {
   const [ready, setReady] = useState(false);
+  const { setAccent } = useSmoothScroll();
+
+  // home page uses the brand accent
+  useEffect(() => {
+    setAccent("#ff4d2e");
+  }, [setAccent]);
 
   const handleLoaded = () => {
     setReady(true);
@@ -28,7 +35,7 @@ export default function Experience() {
   };
 
   return (
-    <>
+    <SmoothScrollProvider>
       <WebGLBackground />
       <Cursor />
       {!ready && <Preloader onComplete={handleLoaded} />}
@@ -43,6 +50,6 @@ export default function Experience() {
         <About />
         <Footer />
       </main>
-    </>
+    </SmoothScrollProvider>
   );
 }

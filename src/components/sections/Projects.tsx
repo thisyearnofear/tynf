@@ -2,6 +2,7 @@
 
 import { projects } from "@/data/projects";
 import { Parallax } from "@/components/useScrollReveal";
+import Link from "next/link";
 
 export default function Projects() {
   return (
@@ -12,8 +13,8 @@ export default function Projects() {
       </div>
 
       {projects.map((p, i) => (
-        <article className="project" key={p.id}>
-          <div className="project__media" data-hover>
+        <Link className="project" href={`/work/${p.id}`} key={p.id} data-hover>
+          <div className="project__media">
             <span className="project__index">
               {String(i + 1).padStart(2, "0")}
             </span>
@@ -52,17 +53,11 @@ export default function Projects() {
               ))}
             </div>
 
-            <a
-              className="project__link"
-              href={p.href}
-              target="_blank"
-              rel="noreferrer"
-              data-hover
-            >
+            <span className="project__link" data-hover>
               view project <span className="arrow">→</span>
-            </a>
+            </span>
           </div>
-        </article>
+        </Link>
       ))}
     </section>
   );

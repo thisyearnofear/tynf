@@ -40,16 +40,29 @@ src/
     Cursor.tsx        # custom magnetic cursor
     WebGLBackground.tsx
     heroIntro.ts      # shared registry so Experience can trigger the hero intro
+    SmoothScrollProvider.tsx  # accent + pointer context shared with WebGL
     sections/         # page sections, one file each
       Nav.tsx Hero.tsx Marquee.tsx Manifesto.tsx
       Projects.tsx About.tsx Footer.tsx
     useScrollReveal.tsx  # useScrollReveal hook + <Reveal>/<Parallax> helpers
+  app/
+    page.tsx          # home (Experience)
+    work/[id]/page.tsx  # per-project detail route (statically generated)
   data/
-    projects.ts       # ★ the portfolio content — edit this to add/change projects
+    projects.ts       # ★ project list — edit to add/change projects
+    details.ts        # ★ concise detail copy (what / highlights / note)
   lib/
     gsap.ts                 # registers ScrollTrigger once
     useIsomorphicLayoutEffect.ts
 ```
+
+### Project detail pages
+
+Each project gets a concise detail page at `/work/[id]` (statically generated for
+every project in `projects.ts`). It shows a masked title reveal, a one-line "what
+it is", a few "why it's fun" highlights, a sticky meta panel (stack / tags /
+status) with live + code links, and a next-project link. The WebGL background
+retints to the project's accent color on entry.
 
 ## Adding a project
 

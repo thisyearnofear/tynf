@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { gsap } from "@/lib/gsap";
+import { useSmoothScroll } from "./SmoothScrollProvider";
 
 const vertex = /* glsl */ `
   varying vec2 vUv;
@@ -91,6 +93,17 @@ function hexToVec3(hex: string): THREE.Vector3 {
 
 export default function WebGLBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { accent } = useSmoothScroll();
+
+  const uniformsRef = useRef({
+    uTime: { value: 0 },
+    uRes: { value: new THREE.Vector2(1, 1) },
+    uPointer: { value: new THREE.Vector2(0.5, 0.5) },
+    uScroll: { value: 0 },
+    uColorA: { value: hexToVec3("#0a0a0c") },
+    uColorB: { value: hexToVec3("#ff4d2e") },
+    uColorC: { value: hexToVec3("#b02eff") },
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -104,15 +117,7 @@ export default function WebGLBackground() {
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-    const uniforms = {
-      uTime: { value: 0 },
-      uRes: { value: new THREE.Vector2(1, 1) },
-      uPointer: { value: new THREE.Vector2(0.5, 0.5) },
-      uScroll: { value: 0 },
-      uColorA: { value: hexToVec3("#0a0a0c") },
-      uColorB: { value: hexToVec3("#ff4d2e") },
-      uColorC: { value: hexToVec3("#b02eff") },
-    };
+    const uniforms = uniformsRef.current;
 
     const material = new THREE.ShaderMaterial({
       vertexShader: vertex,
@@ -176,6 +181,19 @@ export default function WebGLBackground() {
       renderer.dispose();
     };
   }, []);
+
+  // smoothly retint the field when the active project accent changes
+  useEffect(() => {
+    const target = new THREE.Color(accent);
+    gsap.to(uniformsRef.current.uColorB.value, {
+      r: target.r,
+      g: target.g,
+      b: target.b,
+      duration: 0.9,
+      ease: "power2.out",
+      overwrite: true,
+    });
+  }, [accent]);
 
   return <canvas ref={canvasRef} className="bg-canvas" aria-hidden />;
 }
