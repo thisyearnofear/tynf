@@ -36,6 +36,25 @@ export default function DetailOverlay({
     archived: "archived",
   };
 
+  const statusDescription: Record<ProjectStatus, string> = {
+    live: "Active project.",
+    fork: "Built on an existing open-source project and extended.",
+    archived: "No longer actively maintained.",
+  };
+
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const url = `${window.location.origin}/work/${project.id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      prompt("Copy this link:", url);
+    }
+  };
+
   useEffect(() => {
     setAccent(project.accent);
   }, [project.accent, setAccent]);
@@ -161,7 +180,11 @@ export default function DetailOverlay({
           </div>
           <p className="detail__eyebrow" data-fade>
             {project.year} · {project.role}
-            {project.status !== "live" && ` · ${statusLabel[project.status]}`}
+            {project.status !== "live" && (
+              <span title={statusDescription[project.status]}>
+                {` · ${statusLabel[project.status]}`}
+              </span>
+            )}
           </p>
           <h1 className="detail__title" ref={titleRef}>
             <span className="line-mask">
@@ -175,6 +198,27 @@ export default function DetailOverlay({
 
         <section className="detail__body">
           <div className="detail__col">
+            {detail?.insight && (
+              <div data-fade>
+                <h2 className="detail__h2">Our take</h2>
+                <p className="detail__insight">{detail.insight}</p>
+              </div>
+            )}
+
+            {detail?.uses && detail.uses.length > 0 && (
+              <div className="detail__uses" data-fade>
+                <h2 className="detail__h2">Use it for</h2>
+                <ul className="detail__list">
+                  {detail.uses.map((u, i) => (
+                    <li key={i}>
+                      <span className="detail__bullet" />
+                      {u}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <h2 className="detail__h2" data-fade>
               Why it&apos;s fun
             </h2>
@@ -205,7 +249,11 @@ export default function DetailOverlay({
               </div>
               <div>
                 <dt>Status</dt>
-                <dd>{project.status}</dd>
+                <dd>
+                  <span title={statusDescription[project.status]}>
+                    {statusLabel[project.status]}
+                  </span>
+                </dd>
               </div>
             </dl>
             <div className="detail__actions">
@@ -213,20 +261,28 @@ export default function DetailOverlay({
                 className="detail__btn detail__btn--primary"
                 href={project.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 data-hover
               >
-                visit live <span>→</span>
+                Try it now <span>→</span>
               </a>
               <a
                 className="detail__btn"
                 href={project.repo}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 data-hover
               >
-                view code <span>→</span>
+                View source <span>→</span>
               </a>
+              <button
+                type="button"
+                className="detail__btn"
+                onClick={handleShare}
+                data-hover
+              >
+                {copied ? "Link copied" : "Share project"} <span>→</span>
+              </button>
             </div>
           </aside>
         </section>

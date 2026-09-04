@@ -3,6 +3,10 @@ export type ProjectDetail = {
   what: string;
   /** Short, delightful "why it's fun / what's clever" bullets. */
   highlights: string[];
+  /** Concrete jobs the project is good for. */
+  uses?: string[];
+  /** A short thought-leadership take on why the project exists. */
+  insight?: string;
   /** Optional single sentence credit / origin note. */
   note?: string;
 };
@@ -15,6 +19,13 @@ export const details: Record<string, ProjectDetail> = {
       "A branching memory model: tiny decisions reshape the cast of voices.",
       "Character-driven narrative generation, not a chatbot in a trench coat.",
     ],
+    uses: [
+      "Daily decision journaling",
+      "Speculative fiction experiments",
+      "Character-driven self-reflection",
+    ],
+    insight:
+      "We built FutureSelves to see whether AI could make abstract future consequences feel personal. The surprising result: people care more about a fictional 'future me' than a dashboard of probabilities.",
     note: "Built as a quiet study in agency and self-image.",
   },
   spinchain: {
@@ -24,6 +35,13 @@ export const details: Record<string, ProjectDetail> = {
       "Health-based incentives reward showing up, not just winning.",
       "Shareable performance proofs using privacy-preserving ZK tech.",
     ],
+    uses: [
+      "Spin studio ticketing",
+      "Instructor payout automation",
+      "Health-incentive challenges",
+    ],
+    insight:
+      "Most fitness apps reward outcomes. Spinchain rewards showing up — because the hardest part of a workout is usually getting there.",
     note: "Where fitness meets protocol design.",
   },
   "directors-canvas": {
@@ -33,6 +51,13 @@ export const details: Record<string, ProjectDetail> = {
       "Generative UI that reshapes around the story you're telling.",
       "A director's chair for the text-to-video era.",
     ],
+    uses: [
+      "Pre-visualizing scenes",
+      "Rapid UI prototyping from descriptions",
+      "Interactive storyboarding",
+    ],
+    insight:
+      "Directors think in shots, not buttons. We wanted a canvas where the interface forms around the scene instead of the other way around.",
   },
   lattency: {
     what: "A crowdsourced metro map of café wifi speeds — stations are cafés, the lines are speed tiers.",
@@ -41,6 +66,7 @@ export const details: Record<string, ProjectDetail> = {
       "Community-sourced pings keep the map honest and live.",
       "Find the fastest seat in the city before you leave the house.",
     ],
+    uses: ["Remote-work café scouting", "Freelancer route planning", "City wifi benchmarking"],
     note: "Born from one too many dead-zone coffees.",
   },
   writersarcade: {
@@ -50,6 +76,13 @@ export const details: Record<string, ProjectDetail> = {
       "Stateful, re-playable narratives instead of one-shot answers.",
       "A whole arcade of author-built text adventures.",
     ],
+    uses: [
+      "Prototyping branching fiction",
+      "AI-assisted roleplay worlds",
+      "Reader-driven story experiments",
+    ],
+    insight:
+      "Text games are the original sandbox. AI just makes the sand respond.",
     note: "Forked from themaximalist's InfinityArcade.",
   },
   syndicate: {
@@ -59,6 +92,7 @@ export const details: Record<string, ProjectDetail> = {
       "Transparent flows show exactly where the luck lands.",
       "Playing feels less like gambling, more like giving.",
     ],
+    uses: ["Charity fundraising", "Community pools", "Transparent lotteries"],
   },
   fourcast: {
     what: "Weather you can almost feel on your skin — atmospheric and scroll-driven.",
@@ -67,6 +101,7 @@ export const details: Record<string, ProjectDetail> = {
       "Scroll choreographs the sky, the light, the temperature.",
       "A weather report that's also a mood.",
     ],
+    uses: ["Immersive weather storytelling", "Mood-based travel planning", "Ambient browsing"],
     note: "Forked from a Codrops WebGL study.",
   },
   ghiblify: {
@@ -76,6 +111,7 @@ export const details: Record<string, ProjectDetail> = {
       "One image in, a whole pastoral world out.",
       "Nostalgia on demand, gently rendered.",
     ],
+    uses: ["Social profile art", "Personalized gifts", "Nostalgia experiments"],
     note: "Forked from vishalshenoy's ghiblify.",
   },
   Saywaht: {
@@ -85,6 +121,9 @@ export const details: Record<string, ProjectDetail> = {
       "The timeline decides what's worth saying — and holding.",
       "Memes as tokens; tokens as culture.",
     ],
+    uses: ["Creator monetization", "Meme drops", "Community speculation"],
+    insight:
+      "Memes are the native currency of the timeline. Tokens just make the ledger visible.",
     note: "Forked from OpenCut's app shell.",
   },
   detective: {
@@ -94,6 +133,9 @@ export const details: Record<string, ProjectDetail> = {
       "Map relationships you suspected but couldn't show.",
       "Investigative calm for a noisy internet.",
     ],
+    uses: ["OSINT research", "Social graph mapping", "Network investigation"],
+    insight:
+      "The open web is a crime scene. Detective gives you a caseboard for it.",
     note: "Forked from stefanbohacek's Detective.",
   },
   agnej: {
@@ -103,6 +145,7 @@ export const details: Record<string, ProjectDetail> = {
       "Tactile, physics-driven play with a cruel sense of humour.",
       "A toy that punishes confidence.",
     ],
+    uses: ["Physics play", "Stress-testing patience", "Browser toy experiments"],
     note: "Forked from chandlerprall's Physijs.",
   },
 };
