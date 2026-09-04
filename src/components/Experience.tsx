@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ScrollTrigger } from "@/lib/gsap";
 import { heroIntro } from "./heroIntro";
 import { SmoothScrollProvider, useSmoothScroll } from "./SmoothScrollProvider";
-import { projects } from "@/data/projects";
 
 import Preloader from "./Preloader";
 import Cursor from "./Cursor";
@@ -17,19 +17,16 @@ import Hero from "./sections/Hero";
 import Marquee from "./sections/Marquee";
 import Manifesto from "./sections/Manifesto";
 import CurveGallery from "./CurveGallery";
-import DetailOverlay from "./DetailOverlay";
 import Vision from "./sections/About";
 import Footer from "./sections/Footer";
 
 export default function Experience() {
   const [ready, setReady] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [origin, setOrigin] = useState<{ x: number; y: number } | null>(null);
   const { setAccent } = useSmoothScroll();
+  const router = useRouter();
 
-  const handleSelect = (id: string, o?: { x: number; y: number }) => {
-    setSelectedId(id);
-    setOrigin(o ?? null);
+  const handleSelect = (id: string) => {
+    router.push(`/work/${id}`);
   };
 
   // home page uses the brand accent
@@ -66,14 +63,6 @@ export default function Experience() {
         <Footer />
       </main>
 
-      {selectedId && (
-        <DetailOverlay
-          project={projects.find((p) => p.id === selectedId)!}
-          origin={origin}
-          onClose={() => setSelectedId(null)}
-          onSelect={handleSelect}
-        />
-      )}
     </SmoothScrollProvider>
   );
 }

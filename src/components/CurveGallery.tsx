@@ -241,6 +241,7 @@ export default function CurveGallery({
     const resize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
