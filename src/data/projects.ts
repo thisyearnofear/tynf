@@ -34,9 +34,9 @@ export const projects: Project[] = [
   {
     id: "spinchain",
     title: "SPINCHAIN",
-    tagline: "Spin class as a programmable financial event.",
+    tagline: "Spin classes, settled onchain.",
     description:
-      "An onchain operating system for fitness instructors that turns spin classes into programmable financial events — ticketing, dynamic pricing, health-based incentives, and shareable performance proofs with privacy-preserving ZK technology.",
+      "An onchain OS for spin classes — ticketing, dynamic pricing, health-based incentives, and shareable performance proofs with privacy-preserving ZK tech.",
     year: "2026",
     role: "Product · Smart Contracts · UX",
     language: "TypeScript",
@@ -49,9 +49,9 @@ export const projects: Project[] = [
   {
     id: "directors-canvas",
     title: "DIRECTOR'S CANVAS",
-    tagline: "A Runway-powered generative UI canvas.",
+    tagline: "Generative UI canvas powered by Runway.",
     description:
-      "A generative UI canvas powered by Runway, where direction becomes interface. Describe a scene and watch the controls compose themselves in real time.",
+      "A generative UI canvas powered by Runway. Describe a scene and watch the controls compose themselves in real time.",
     year: "2026",
     role: "Creative Dev · AI",
     language: "TypeScript",
@@ -94,9 +94,9 @@ export const projects: Project[] = [
   {
     id: "syndicate",
     title: "SYNDICATE",
-    tagline: "Lottery, rebuilt around social good.",
+    tagline: "A lottery for shared impact.",
     description:
-      "A lottery reimagined as a vehicle for social good — pooling luck and turning small stakes into shared, visible impact for the people who play.",
+      "A lottery that pools luck into shared, visible impact — turning small stakes into collective good for the people who play.",
     year: "2025",
     role: "Product · Systems",
     language: "TypeScript",
@@ -124,9 +124,9 @@ export const projects: Project[] = [
   {
     id: "ghiblify",
     title: "GHIBLIFY",
-    tagline: "Your photos, painted by the forest.",
+    tagline: "Turn photos into Ghibli-style art.",
     description:
-      "An application that converts your photos into Studio Ghibli style artwork using Stable Diffusion. Drop an image, get a frame from a film that never was.",
+      "Turn your photos into Studio Ghibli-style artwork with Stable Diffusion. Drop an image, get a frame from a film that never was.",
     year: "2025",
     role: "Fork · ML",
     language: "JavaScript",
@@ -139,9 +139,9 @@ export const projects: Project[] = [
   {
     id: "Saywaht",
     title: "SAYWAHT",
-    tagline: "Meme commentary, coined on Zora.",
+    tagline: "Memes as tokens on Zora.",
     description:
-      "A based meme-commentary coining platform on Zora — turn a take into a token, a joke into a collectible, and let the timeline decide what's worth saying.",
+      "A meme-to-token platform on Zora — turn a take into a token, a joke into a collectible, and let the timeline decide what's worth saying.",
     year: "2025",
     role: "Fork · Web3",
     language: "TypeScript",

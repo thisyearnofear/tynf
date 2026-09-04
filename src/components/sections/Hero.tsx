@@ -88,7 +88,7 @@ export default function Hero() {
       </div>
 
       <p className="hero__eyebrow" data-fade>
-        an agentic-era studio — est. this year
+        Experimental products · AI, WebGL, onchain
       </p>
       <h1 className="hero__title">
         <span className="line-mask">
@@ -102,11 +102,11 @@ export default function Hero() {
       </h1>
       <div className="hero__meta">
         <p className="hero__lead" data-fade>
-          The agentic era closed the gap between an idea and a working thing.
-          No time like the present, no permission required — just build.
+          We turn ideas into working products in days, not quarters. AI, WebGL,
+          and onchain experiments — built and shipped in public.
         </p>
         <div className="hero__scroll" data-fade>
-          scroll <span>↓</span>
+          Explore the work <span>↓</span>
         </div>
       </div>
     </section>

@@ -326,7 +326,7 @@ export default function CurveGallery({
       <div className="curve-gallery__sticky">
         <canvas ref={canvasRef} className="curve-gallery__canvas" />
         <div className="curve-gallery__hint">
-          scroll to fly through · click a world
+          Scroll to explore · click to open a project
         </div>
       </div>
     </section>

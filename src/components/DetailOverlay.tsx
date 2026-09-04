@@ -7,7 +7,7 @@ import { useIsomorphicLayoutEffect } from "@/lib/useIsomorphicLayoutEffect";
 import { useSmoothScroll } from "@/components/SmoothScrollProvider";
 import { projects } from "@/data/projects";
 import { details } from "@/data/details";
-import type { Project } from "@/data/projects";
+import type { Project, ProjectStatus } from "@/data/projects";
 
 export default function DetailOverlay({
   project,
@@ -29,6 +29,12 @@ export default function DetailOverlay({
   const index = projects.findIndex((p) => p.id === project.id);
   const next = projects[(index + 1) % projects.length];
   const detail = details[project.id];
+
+  const statusLabel: Record<ProjectStatus, string> = {
+    live: "live",
+    fork: "remix",
+    archived: "archived",
+  };
 
   useEffect(() => {
     setAccent(project.accent);
@@ -155,7 +161,7 @@ export default function DetailOverlay({
           </div>
           <p className="detail__eyebrow" data-fade>
             {project.year} · {project.role}
-            {project.status === "fork" ? " · fork" : ""}
+            {project.status !== "live" && ` · ${statusLabel[project.status]}`}
           </p>
           <h1 className="detail__title" ref={titleRef}>
             <span className="line-mask">

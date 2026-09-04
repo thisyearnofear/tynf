@@ -10,17 +10,14 @@ export default function Footer() {
       </Reveal>
       <Reveal as="div" className="footer__meta" variant="fade">
         <div className="footer__links">
-          <a href="#" data-hover>
-            IG
-          </a>
-          <a href="#" data-hover>
-            X
-          </a>
           <a href="https://github.com/thisyearnofear" data-hover>
-            GH
+            github
+          </a>
+          <a href="mailto:hello@thisyearnofear.com" data-hover>
+            contact
           </a>
         </div>
-        built in public — no fear, no time like the present
+        Open to collaborations, forks, and weird ideas
         <br />
         © {new Date().getFullYear()} thisyearnofear
       </Reveal>

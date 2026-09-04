@@ -23,21 +23,21 @@ const mono = Geist_Mono({
 });
 
 const description =
-  "Selected work from the agentic era — built without waiting for permission, perfect timing, or a finished plan. No fear. No finish line. Just the work.";
+  "A public portfolio of working prototypes, remixes, and live products at the edge of AI, WebGL, and onchain culture.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tynf.vercel.app"),
-  title: "thisyearnofear — selected works",
+  title: "thisyearnofear — experimental products",
   description,
   openGraph: {
-    title: "thisyearnofear — selected works",
+    title: "thisyearnofear — experimental products",
     description,
     siteName: "thisyearnofear",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "thisyearnofear — selected works",
+    title: "thisyearnofear — experimental products",
     description,
   },
 };
