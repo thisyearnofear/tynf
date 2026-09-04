@@ -2,7 +2,7 @@
 
 import { useScrollReveal } from "@/components/useScrollReveal";
 
-const lines = ["No fear", "No finish line", "No permission", "Just the work"];
+const lines = ["Ship fast", "Build in public", "Share the code", "Learn in the open"];
 
 export default function Manifesto() {
   const scope = useScrollReveal<HTMLElement>();

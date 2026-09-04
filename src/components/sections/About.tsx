@@ -9,7 +9,7 @@ const beams = [
   },
   {
     k: "Onchain culture",
-    t: "Turning play, memes and effort into infrastructure anyone can stand on.",
+    t: "Turning play, memes, and effort into infrastructure anyone can use.",
   },
   {
     k: "Interfaces that compose themselves",
@@ -21,8 +21,9 @@ export default function Vision() {
   return (
     <section id="vision" className="section about vision">
       <Reveal as="p" className="about__big" variant="fade">
-        The agentic era arrived, and the excuses that kept people{" "}
-        <em>waiting</em> went with it.
+        The cost of shipping a working idea has never been lower. We use that
+        freedom to build fast, share the source, and learn in{" "}
+        <em>public</em>.
       </Reveal>
 
       <div className="vision__grid">
@@ -35,8 +36,8 @@ export default function Vision() {
       </div>
 
       <Reveal as="p" className="vision__close" variant="fade">
-        No fear. No finish line. No time like the present — just the work,
-        built in public.
+        Every project is a public experiment. Fork it, break it, remix it — the
+        work only gets better.
       </Reveal>
     </section>
   );

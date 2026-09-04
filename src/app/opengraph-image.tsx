@@ -33,7 +33,7 @@ export default function Image() {
             marginBottom: 32,
           }}
         >
-          an agentic-era studio — est. this year
+          Experimental products · AI, WebGL, onchain
         </div>
         <div
           style={{
@@ -64,7 +64,7 @@ export default function Image() {
             color: "rgba(244,241,234,0.75)",
           }}
         >
-          No fear. No finish line. Just the work.
+          Ship fast. Build in public. Share the code.
         </div>
       </div>
     ),

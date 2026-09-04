@@ -18,16 +18,16 @@ export const details: Record<string, ProjectDetail> = {
     note: "Built as a quiet study in agency and self-image.",
   },
   spinchain: {
-    what: "An onchain operating system that turns a spin class into a programmable financial event.",
+    what: "An onchain OS for spin classes — ticketing, dynamic pricing, and payouts built for instructors.",
     highlights: [
       "Ticketing, dynamic pricing and payouts, settled onchain.",
       "Health-based incentives reward showing up, not just winning.",
       "Shareable performance proofs using privacy-preserving ZK tech.",
     ],
-    note: "Where fitness instructor meets protocol designer.",
+    note: "Where fitness meets protocol design.",
   },
   "directors-canvas": {
-    what: "A Runway-powered canvas where direction becomes interface.",
+    what: "A generative UI canvas powered by Runway.",
     highlights: [
       "Describe a scene; the controls compose themselves in real time.",
       "Generative UI that reshapes around the story you're telling.",
@@ -53,7 +53,7 @@ export const details: Record<string, ProjectDetail> = {
     note: "Forked from themaximalist's InfinityArcade.",
   },
   syndicate: {
-    what: "A lottery rebuilt around social good.",
+    what: "A lottery that pools luck into shared, visible impact.",
     highlights: [
       "Small pooled stakes become shared, visible impact.",
       "Transparent flows show exactly where the luck lands.",
@@ -70,20 +70,20 @@ export const details: Record<string, ProjectDetail> = {
     note: "Forked from a Codrops WebGL study.",
   },
   ghiblify: {
-    what: "Drop a photo, get a frame from a Studio Ghibli film that never was.",
+    what: "Turn a photo into a frame from a Studio Ghibli film that never was.",
     highlights: [
       "Stable Diffusion paints your moments in hand-drawn warmth.",
       "One image in, a whole pastoral world out.",
-      "Nostalgia as a service, gently rendered.",
+      "Nostalgia on demand, gently rendered.",
     ],
     note: "Forked from vishalshenoy's ghiblify.",
   },
   Saywaht: {
-    what: "A based meme-commentary coining platform on Zora.",
+    what: "A meme-to-token platform on Zora.",
     highlights: [
       "Turn a take into a token and a joke into a collectible.",
       "The timeline decides what's worth saying — and holding.",
-      "Commentary as culture, culture as coin.",
+      "Memes as tokens; tokens as culture.",
     ],
     note: "Forked from OpenCut's app shell.",
   },

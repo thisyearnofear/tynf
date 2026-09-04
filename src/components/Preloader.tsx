@@ -58,7 +58,7 @@ export default function Preloader({
 
   return (
     <div ref={rootRef} className="preloader">
-      <div className="preloader__label">thisyearnofear — loading the fear</div>
+      <div className="preloader__label">thisyearnofear — loading the work</div>
       <span ref={countRef} className="preloader__count">
         0
       </span>
