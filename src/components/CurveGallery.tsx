@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import * as THREE from "three";
 import { projects } from "@/data/projects";
 import { useSmoothScroll } from "@/components/SmoothScrollProvider";
@@ -118,11 +119,16 @@ export default function CurveGallery({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const lastHoverRef = useRef<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const { setAccent } = useSmoothScroll();
   const onSelectRef = useRef(onSelect);
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
+
+  const hoveredProject = projects.find((p) => p.id === hoveredId);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -226,10 +232,23 @@ export default function CurveGallery({
       ndc.y = -(e.clientY / window.innerHeight) * 2 + 1;
       ray.setFromCamera(ndc, camera);
       const hits = ray.intersectObjects(planes.map((pl) => pl.mesh));
-      const hit = hits.length ? planes.find((p) => p.mesh === hits[0].object) ?? null : null;
+      const hit = hits.length
+        ? planes.find((p) => p.mesh === hits[0].object) ?? null
+        : null;
+
       if (hit !== hovered) {
         hovered = hit;
         document.body.style.cursor = hit ? "pointer" : "";
+      }
+
+      const hitId = hit ? hit.id : null;
+      if (hitId !== lastHoverRef.current) {
+        lastHoverRef.current = hitId;
+        setHoveredId(hitId);
+      }
+
+      if (tooltipRef.current) {
+        tooltipRef.current.style.transform = `translate3d(${e.clientX + 16}px, ${e.clientY + 16}px, 0)`;
       }
     };
     const onClick = (e: PointerEvent) => {
@@ -324,10 +343,31 @@ export default function CurveGallery({
   return (
     <section id="work" className="curve-gallery" ref={wrapRef}>
       <div className="curve-gallery__sticky">
-        <canvas ref={canvasRef} className="curve-gallery__canvas" />
+        <h2 className="curve-gallery__heading">Selected work</h2>
+        <canvas
+          ref={canvasRef}
+          className="curve-gallery__canvas"
+          aria-label="Interactive 3D project gallery. Scroll and click a card to open a project."
+          role="img"
+        />
+        <div
+          ref={tooltipRef}
+          className={`curve-gallery__tooltip${
+            hoveredId ? " curve-gallery__tooltip--visible" : ""
+          }`}
+        >
+          {hoveredProject ? `Open ${hoveredProject.title}` : ""}
+        </div>
         <div className="curve-gallery__hint">
           Scroll to explore · click to open a project
         </div>
+        <ul className="sr-only" aria-label="Project list">
+          {projects.map((p) => (
+            <li key={p.id}>
+              <Link href={`/work/${p.id}`}>{p.title}</Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
